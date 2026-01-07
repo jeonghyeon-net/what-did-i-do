@@ -158,7 +158,9 @@ async function cloneAndGetCommits(repo, org, authors, tempDir) {
   const cloneUrl = `https://github.com/${org}/${repo.name}.git`;
 
   try {
-    await execAsync(`git clone --quiet --filter=blob:none "${cloneUrl}" "${repoPath}"`);
+    await execAsync(`git clone --quiet --filter=blob:none "${cloneUrl}" "${repoPath}"`, {
+      timeout: 120000
+    });
   } catch (error) {
     return [];
   }
@@ -169,7 +171,7 @@ async function cloneAndGetCommits(repo, org, authors, tempDir) {
   try {
     const { stdout } = await execAsync(
       `git log --all ${authorFilters} --format="%H<|>%s<|>%aI" --date=iso`,
-      { cwd: repoPath, maxBuffer: 50 * 1024 * 1024 }
+      { cwd: repoPath, maxBuffer: 500 * 1024 * 1024, timeout: 60000 }
     );
     commits = stdout.trim();
   } catch (error) {
