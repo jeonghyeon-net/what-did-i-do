@@ -62,6 +62,7 @@ what-did-i-do
 | 커밋 수집하기 | GitHub 조직/개인 레포에서 커밋 수집 |
 | 이력서 생성하기 | 수집된 커밋 기록으로 AI 이력서 생성 |
 | 수집 후 바로 이력서 생성 | 위 두 작업을 연속 실행 |
+| temp 폴더에서 재생성 | 기존 월별 섹션으로 최종 이력서만 재생성 |
 
 ### 커밋 수집
 
@@ -75,6 +76,7 @@ what-did-i-do
 
 - 월별로 커밋 그룹화
 - Claude AI로 각 월별 활동 요약
+- 레포별 프로젝트 경험 섹션 생성 (10개 병렬 처리)
 - 최종 이력서 마크다운 생성 (기술 역량 + 프로젝트 경험)
 
 ## 출력 파일
@@ -84,7 +86,10 @@ what-did-i-do
 | `commits-{org}-{timestamp}.md` | 수집된 커밋 기록 |
 | `resume-{timestamp}.md` | 생성된 이력서 |
 | `.temp-repos-*` | 레포지토리 클론 임시 폴더 |
-| `.temp-resume-parts-*` | 이력서 섹션 임시 폴더 |
+| `.temp-resume-parts-*/` | 이력서 섹션 임시 폴더 |
+| `.temp-resume-parts-*/{YYYY-MM}.md` | 월별 활동 요약 |
+| `.temp-resume-parts-*/repos/{repo}.md` | 레포별 프로젝트 경험 |
+| `.temp-resume-parts-*/tech-stack.md` | 기술 역량 섹션 |
 
 ## 커밋 파일 형식
 
