@@ -1,0 +1,23 @@
+{
+  "name": "what-did-i-do",
+  "version": "1.0.0",
+  "description": "GitHub Organization 커밋 수집 및 이력서 생성 CLI 도구",
+  "type": "module",
+  "main": "app.mjs",
+  "bin": {
+    "what-did-i-do": "./app.mjs"
+  },
+  "scripts": {
+    "start": "node app.mjs"
+  },
+  "keywords": [
+    "github",
+    "commits",
+    "resume",
+    "cli"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.1.76"
+  }
+}

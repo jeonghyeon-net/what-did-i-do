@@ -1,3 +1,6 @@
 .DS_Store
 commits-*.md
+resume-*.md
 .temp-repos-*
+.temp-resume-parts-*
+node_modules
