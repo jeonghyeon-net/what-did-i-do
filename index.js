@@ -301,43 +301,27 @@ async function main() {
   writeHeader();
 
   const total = repos.length;
-
-  for (const repo of repos) {
-    console.log(`  \x1B[90m○ ${repo.name}\x1B[0m`);
-  }
-  console.log(`\x1B[90m[0/${total}]\x1B[0m`);
-
   let completed = 0;
 
-  const render = () => {
-    process.stdout.write(`\x1B[${total + 1}A`);
-    for (let i = 0; i < total; i++) {
-      clearLine();
-      const repo = repos[i];
-      const result = repoResults[i];
-      if (result === undefined) {
-        console.log(`  \x1B[90m○ ${repo.name}\x1B[0m`);
-      } else if (result > 0) {
-        console.log(`  \x1B[32m● ${repo.name} → ${result}개\x1B[0m`);
-      } else {
-        console.log(`  \x1B[90m● ${repo.name}\x1B[0m`);
-      }
-    }
-    clearLine();
-    console.log(`\x1B[90m[${completed}/${total}]\x1B[0m`);
-  };
-
-  const repoResults = new Array(total).fill(undefined);
+  process.stdout.write(`\x1B[90m[0/${total}] 검색 중...\x1B[0m`);
 
   const results = await Promise.all(
-    repos.map(async (repo, index) => {
+    repos.map(async (repo) => {
       const commits = await cloneAndGetCommits(repo, org, authors, tempDir);
       completed++;
-      repoResults[index] = commits.length;
-      render();
+
+      clearLine();
+      if (commits.length > 0) {
+        console.log(`\x1B[32m● ${repo.name}\x1B[0m → ${commits.length}개`);
+      }
+      process.stdout.write(`\x1B[90m[${completed}/${total}] 검색 중...\x1B[0m`);
+
       return { repo, commits };
     })
   );
+
+  clearLine();
+  console.log(`\x1B[32m✔\x1B[0m ${total}개 레포지토리 검색 완료`);
 
   for (const { repo, commits } of results) {
     if (commits.length > 0) {
